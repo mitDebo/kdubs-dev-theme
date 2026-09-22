@@ -1,7 +1,4 @@
 <?php
-/**
- * Placeholder header -- real layout/design TBD once we start on this theme.
- */
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -11,3 +8,6 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+
+<div class="site-content-box">
