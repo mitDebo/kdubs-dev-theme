@@ -21,3 +21,20 @@ function kdubsdev_scripts() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'kdubsdev_scripts' );
+
+function kdubsdev_document_title_parts( $title ) {
+	if ( is_front_page() ) {
+		return array( 'title' => get_bloginfo( 'name', 'display' ) );
+	}
+
+	return array(
+		'title' => isset( $title['title'] ) ? $title['title'] : '',
+		'site'  => get_bloginfo( 'name', 'display' ),
+	);
+}
+add_filter( 'document_title_parts', 'kdubsdev_document_title_parts' );
+
+function kdubsdev_document_title_separator() {
+	return '|';
+}
+add_filter( 'document_title_separator', 'kdubsdev_document_title_separator' );
