@@ -13,6 +13,8 @@ Text Domain: kdubsdev
 	--color-text: #333333;
 	--color-link: #428bca;
 	--color-heading-accent: #d4315c;
+	--color-banner-2: #484b6d;
+	--color-footer-bg: #474c58;
 	--color-box-bg: #fafafa;
 	--font-body: 'Open Sans', sans-serif;
 }
@@ -69,18 +71,277 @@ h6 {
 	line-height: 1.3;
 }
 
-.site-content-box {
-	max-width: 800px;
+/* Everything below -- the wrapper, the color banner, the content
+   box, the two-column layout and the footer bar -- share one
+   width and sit stacked directly on top of each other, the same
+   way they do on the live kdubs.dev site. */
+
+/* kdubs.dev doesn't scale smoothly -- it jumps between two fixed
+   widths at specific screen sizes (808px, then 975px once there's
+   enough room), rather than growing continuously. Matching that
+   exactly, instead of a smooth max-width, so the sidebar doesn't
+   drift to a different size than the live site at in-between
+   widths. */
+.site-wrap {
+	width: 100%;
 	margin: 3rem auto;
-	padding: 2.5rem 3rem;
+}
+
+@media (min-width: 992px) {
+	.site-wrap {
+		width: 808px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.site-wrap {
+		width: 975px;
+	}
+}
+
+/* The five-color strip above the content box. Just five boxes
+   sitting in a row, each 1/5 of the width, cycling through three
+   colors -- copied straight from kdubs.dev's own banner. */
+.top-colors {
+	display: flex;
+}
+
+.top-colors-segment {
+	flex: 1 1 0%;
+	height: 8px;
+}
+
+.top-colors-c1 {
+	background-color: var(--color-heading-accent);
+}
+
+.top-colors-c2 {
+	background-color: var(--color-banner-2);
+}
+
+.top-colors-c3 {
+	background-color: var(--color-footer-bg);
+}
+
+.site-content-box {
+	padding: 60px 0;
 	background-color: var(--color-box-bg);
-	box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+	/* The gradient lives ONLY in the empty 60px padding-top strip,
+	   above the real content -- never behind the text itself. Its
+	   background-size height is set to match padding-top exactly,
+	   so it can't bleed any lower than the blank space it's in. */
+	background-image: linear-gradient(
+		to right,
+		rgba(0, 0, 0, 0.09) 0%,
+		rgba(0, 0, 0, 0.09) 50%,
+		rgba(0, 0, 0, 0) 100%
+	);
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-size: 300px 60px;
+}
+
+/* Sidebar width matches kdubs.dev's actual column math (4/12 of
+   the box). kdubs.dev also wastes a blank 1/12 strip on the left
+   before the main column starts -- skipped here on purpose so the
+   main column fills that space instead, flush with the box's left
+   edge. Each column keeps its own 15px left/right padding, same
+   as kdubs.dev's. */
+.site-layout {
+	display: flex;
+	align-items: flex-start;
+}
+
+.site-main {
+	flex: 0 0 66.6667%;
+	box-sizing: border-box;
+	/* Extra left padding instead of a separate empty column --
+	   same visual margin kdubs.dev gets from its blank 1/12
+	   spacer, without needing a leftover unused element for it. */
+	padding: 0 15px 0 50px;
+	min-width: 0;
+}
+
+.site-sidebar {
+	flex: 0 0 33.3333%;
+	box-sizing: border-box;
+	padding: 0 15px;
+	min-width: 0;
+}
+
+.site-sidebar .widget + .widget {
+	margin-top: 2rem;
+}
+
+.widget-title {
+	font-weight: 500;
+	font-size: 30px;
+	line-height: 1.1;
+	color: var(--color-heading-accent);
+	margin: 0 0 10px;
+}
+
+.widget-search label {
+	display: block;
+	font-weight: 700;
+	font-size: 13px;
+	margin-bottom: 5px;
+}
+
+.search-form-row {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.search-field {
+	flex: 1 1 auto;
+	min-width: 0;
+	border: 1px solid #949494;
+	padding: 8px;
+	font-family: inherit;
+	font-size: 14px;
+	background-color: #ffffff;
+}
+
+.search-submit {
+	flex: 0 0 auto;
+	background-color: #32373c;
+	color: #ffffff;
+	border: none;
+	padding: 10px 20px;
+	font-family: inherit;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.site-sidebar ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.site-sidebar li {
+	font-size: 13px;
+	line-height: 2;
+}
+
+.site-sidebar li a {
+	color: var(--color-text);
+	text-decoration: none;
+}
+
+.site-sidebar li a:hover {
+	text-decoration: underline;
+}
+
+.site-footer-bar {
+	background-color: var(--color-footer-bg);
+	color: #ffffff;
+	text-align: center;
+	padding: 1.25rem 0;
+}
+
+.site-footer-bar p {
+	margin: 0;
+}
+
+/* Blog index -- one of these per post, title + byline + excerpt,
+   copied from how kdubs.dev lays out its post entries. */
+.post-entry + .post-entry {
+	margin-top: 2.5rem;
+}
+
+.entry-title-link {
+	color: inherit;
+}
+
+.entry-title {
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 1.1;
+	color: #000000;
+	text-transform: uppercase;
+	margin: 14px 0 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #cccccc;
+}
+
+.entry-title-link:hover .entry-title {
+	color: var(--color-link);
+}
+
+.entry-meta {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 1.1;
+	color: #777777;
+	margin: 10px 0;
+}
+
+.entry-date {
+	font-weight: 200;
+	font-style: italic;
+}
+
+.entry-meta-icon {
+	width: 14px;
+	height: 14px;
+	color: #777777;
+}
+
+.entry-excerpt {
+	font-size: 13px;
+	line-height: 19px;
+}
+
+.entry-excerpt p {
+	margin: 0;
+}
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.pagination {
+	margin-top: 2.5rem;
+}
+
+.pagination .nav-links {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	font-weight: 700;
+}
+
+@media (max-width: 991px) {
+	.site-layout {
+		flex-direction: column;
+	}
+
+	.site-main,
+	.site-sidebar {
+		flex-basis: auto;
+		padding: 0 15px;
+	}
 }
 
 @media (max-width: 600px) {
-	.site-content-box {
+	.site-wrap {
 		margin: 0 auto;
+	}
+
+	.site-content-box {
 		padding: 1.5rem 1.25rem;
-		box-shadow: none;
 	}
 }

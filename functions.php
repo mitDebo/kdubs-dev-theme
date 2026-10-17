@@ -6,6 +6,13 @@ function kdubsdev_setup() {
 }
 add_action( 'after_setup_theme', 'kdubsdev_setup' );
 
+function kdubsdev_posts_per_page( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && ( $query->is_home() || $query->is_front_page() ) ) {
+		$query->set( 'posts_per_page', 10 );
+	}
+}
+add_action( 'pre_get_posts', 'kdubsdev_posts_per_page' );
+
 function kdubsdev_scripts() {
 	wp_enqueue_style(
 		'kdubsdev-google-fonts',
