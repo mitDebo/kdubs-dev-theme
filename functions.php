@@ -3,6 +3,12 @@
 function kdubsdev_setup() {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
+
+	register_nav_menus(
+		array(
+			'primary' => __( 'Primary Navigation', 'kdubsdev' ),
+		)
+	);
 }
 add_action( 'after_setup_theme', 'kdubsdev_setup' );
 
@@ -25,6 +31,13 @@ function kdubsdev_scripts() {
 		get_stylesheet_uri(),
 		array( 'kdubsdev-google-fonts' ),
 		filemtime( get_stylesheet_directory() . '/style.css' )
+	);
+	wp_enqueue_script(
+		'kdubsdev-site-menu',
+		get_stylesheet_directory_uri() . '/js/site-menu.js',
+		array(),
+		filemtime( get_stylesheet_directory() . '/js/site-menu.js' ),
+		true
 	);
 }
 add_action( 'wp_enqueue_scripts', 'kdubsdev_scripts' );
