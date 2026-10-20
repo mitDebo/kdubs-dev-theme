@@ -76,15 +76,23 @@ h6 {
    width and sit stacked directly on top of each other, the same
    way they do on the live kdubs.dev site. */
 
-/* kdubs.dev doesn't scale smoothly -- it jumps between two fixed
-   widths at specific screen sizes (808px, then 975px once there's
-   enough room), rather than growing continuously. Matching that
-   exactly, instead of a smooth max-width, so the sidebar doesn't
-   drift to a different size than the live site at in-between
-   widths. */
+/* kdubs.dev doesn't scale smoothly -- it jumps between fixed
+   widths at specific screen sizes (625px, then 808px, then 975px
+   once there's enough room), rather than growing continuously.
+   Matching that exactly, instead of a smooth max-width, so the
+   sidebar doesn't drift to a different size than the live site at
+   in-between widths -- this also covers tablet widths like iPad
+   Mini (768px) and Surface Pro (912px), which otherwise fell
+   between our old two tiers and rendered full-bleed. */
 .site-wrap {
 	width: 100%;
 	margin: 3rem auto;
+}
+
+@media (min-width: 768px) {
+	.site-wrap {
+		width: 625px;
+	}
 }
 
 @media (min-width: 992px) {
@@ -398,13 +406,24 @@ h6 {
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
+	/* A real outer margin here (not padding) so the fixed background
+	   photo shows through on both sides, same as the live site at
+	   this width. */
 	.site-wrap {
-		margin: 0 auto;
+		width: auto;
+		margin: 0 10px;
 	}
 
+	/* Bottom spacing only -- no top padding, so .site-topbar (a
+	   direct child of .site-content-box) stays flush against the
+	   color bar above it, same as on desktop. No horizontal padding
+	   either, since the topbar needs to stay flush edge-to-edge too
+	   -- the main column and sidebar already get their own 15px
+	   side padding from the =991px breakpoint above, so text
+	   content still has room to breathe. */
 	.site-content-box {
-		padding: 1.5rem 1.25rem;
+		padding: 0 0 1.5rem;
 	}
 }
 
@@ -417,15 +436,15 @@ h6 {
 	top: 0;
 	left: 0;
 	height: 100vh;
-	width: 280px;
+	width: 250px;
 	max-width: 85vw;
-	background-color: var(--color-footer-bg);
+	background-color: #111111;
 	color: #ffffff;
 	transform: translateX(-100%);
 	transition: transform 0.25s ease;
 	z-index: 200;
 	overflow-y: auto;
-	padding: 20px;
+	padding: 30px 20px 20px;
 	box-sizing: border-box;
 }
 
@@ -435,7 +454,10 @@ h6 {
 
 .site-menu-close {
 	display: block;
-	margin-left: auto;
+	position: absolute;
+	top: 12px;
+	right: 14px;
+	margin: 0;
 	border: 0;
 	background: none;
 	color: #ffffff;
@@ -446,6 +468,44 @@ h6 {
 .site-menu-close svg {
 	width: 18px;
 	height: 18px;
+}
+
+.site-menu-avatar {
+	display: block;
+	width: 120px;
+	height: 120px;
+	margin: 0 auto;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.site-menu-avatar img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.site-menu-name {
+	margin: 1.5rem auto 0;
+	padding: 8px 20px;
+	border: 2px solid #ffffff;
+	max-width: fit-content;
+	font-size: 22px;
+	font-weight: 200;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.site-menu-name strong {
+	font-weight: 700;
+}
+
+.site-menu-job {
+	margin: 5px 0 20px;
+	font-size: 12px;
+	color: #d8d8d8;
+	text-align: center;
 }
 
 .site-menu-nav {
@@ -484,4 +544,46 @@ h6 {
 
 body.site-menu-locked {
 	overflow: hidden;
+}
+
+/* WordPress's own admin toolbar is supposed to stay position:
+   fixed at all widths (that's its own default CSS), but something
+   in this environment was leaving it computed as absolute at
+   narrow widths, making its real on-screen position move around
+   unpredictably. Pin it down ourselves so it's always truly fixed,
+   then our own sticky header/menu just need a plain top offset
+   matching its height, same approach at every width. */
+#wpadminbar {
+	position: fixed !important;
+	top: 0 !important;
+}
+
+@media screen and (min-width: 783px) {
+	body.admin-bar .site-topbar {
+		top: 32px;
+	}
+
+	body.admin-bar .site-menu-backdrop {
+		top: 32px;
+	}
+
+	body.admin-bar .site-menu {
+		top: 32px;
+		height: calc(100vh - 32px);
+	}
+}
+
+@media screen and (max-width: 782px) {
+	body.admin-bar .site-topbar {
+		top: 46px;
+	}
+
+	body.admin-bar .site-menu-backdrop {
+		top: 46px;
+	}
+
+	body.admin-bar .site-menu {
+		top: 46px;
+		height: calc(100vh - 46px);
+	}
 }

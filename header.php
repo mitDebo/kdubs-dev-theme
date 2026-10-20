@@ -19,6 +19,14 @@
 		</svg>
 	</button>
 
+	<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-menu-avatar">
+		<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/images/avatar.png' ); ?>" alt="">
+	</a>
+
+	<p class="site-menu-name">Kelly <strong>Weaver</strong></p>
+
+	<p class="site-menu-job">Software Engineer</p>
+
 	<nav class="site-menu-nav" aria-label="<?php esc_attr_e( 'Primary', 'kdubsdev' ); ?>">
 		<?php
 		wp_nav_menu(
