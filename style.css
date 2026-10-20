@@ -3,7 +3,7 @@ Theme Name: Kdubs.dev
 Theme URI: https://kdubs.dev
 Author: Kel Weaver
 Description: Custom theme for kdubs.dev -- tech and gaming blog.
-Version: 1.0
+Version: 1.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: kdubsdev
@@ -362,13 +362,82 @@ h6 {
 	color: #777777;
 }
 
+.entry-body {
+	display: flex;
+	align-items: flex-start;
+	gap: 15px;
+}
+
+.entry-thumbnail-link {
+	display: block;
+	flex: 0 0 auto;
+}
+
+.entry-thumbnail-img {
+	display: block;
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+}
+
 .entry-excerpt {
+	flex: 1 1 auto;
+	min-width: 0;
 	font-size: 13px;
 	line-height: 19px;
 }
 
 .entry-excerpt p {
 	margin: 0;
+}
+
+.entry-thumbnail {
+	margin: 20px 0;
+}
+
+.entry-thumbnail img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.entry-content {
+	font-size: 13px;
+	line-height: 19px;
+	color: #333333;
+}
+
+.entry-content p {
+	margin: 0 0 10px;
+}
+
+.entry-content a {
+	color: #428bca;
+	text-decoration: none;
+}
+
+.entry-content a:hover {
+	text-decoration: underline;
+}
+
+.entry-content img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: 10px 0;
+}
+
+.entry-content blockquote {
+	margin: 0 0 10px 20px;
+	padding-left: 15px;
+	border-left: 3px solid #cccccc;
+	color: #555555;
+}
+
+.entry-content ul,
+.entry-content ol {
+	margin: 0 0 10px;
+	padding-left: 24px;
 }
 
 .screen-reader-text {

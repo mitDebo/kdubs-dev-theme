@@ -27,8 +27,18 @@ get_header();
 				<span class="entry-date"><?php echo esc_html( get_the_date( 'd/m/Y' ) ); ?></span>
 			</h4>
 
-			<div class="entry-excerpt">
-				<?php the_excerpt(); ?>
+			<div class="entry-body">
+
+				<?php if ( has_post_thumbnail() ) : ?>
+					<a href="<?php the_permalink(); ?>" class="entry-thumbnail-link">
+						<?php the_post_thumbnail( 'thumbnail', array( 'class' => 'entry-thumbnail-img' ) ); ?>
+					</a>
+				<?php endif; ?>
+
+				<div class="entry-excerpt">
+					<?php the_excerpt(); ?>
+				</div>
+
 			</div>
 
 		</article>

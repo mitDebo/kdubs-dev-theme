@@ -3,3 +3,4 @@ docker-compose.yml
 .env
 .DS_Store
 Claude outputs/
+kdubs-dev-theme.zip
